@@ -1,4 +1,5 @@
 package party_parrot_pete;
+import java.util.Scanner;
 
 class parrotPrinter
 {
@@ -14,9 +15,16 @@ public class MainClass
 	{
 		System.out.println("Party Parrot Pete");
 		
-		NotSmartAlphabet alphabet = new NotSmartAlphabet();
-		alphabet.setUp();
-		alphabet.printAll();
+		ParrotPrinter par = new ParrotPrinter();
+		Scanner sc = new Scanner(System.in);	
+		
+		par.print(sc.next());
+		sc.close();
+		
+//		for(int i=0; i<500; i++)
+//		{
+//			par.print(sc.next());
+//		}
 
 	}
 

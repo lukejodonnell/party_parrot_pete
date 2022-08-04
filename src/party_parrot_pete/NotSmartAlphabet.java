@@ -1,5 +1,14 @@
 package party_parrot_pete;
 
+/*
+ * Woe to you oh weary fool
+ * who's been made to improve this tool
+ * This is my first time making classes
+ * The bar is low, so this crap passes
+ * But if you think there's bugs to patch
+ * Take my advice, just start from scratch
+ */
+
 public class NotSmartAlphabet 
 {
 	FontBitArray letterA = new FontBitArray();
@@ -45,6 +54,7 @@ public class NotSmartAlphabet
     		{ false, false,  true,  true,  true,  true, false}	
     	};
     
+    //did someone say THREE DIMENSONAL ARRAY!?  This array contains each letter as a two dimensional array
     boolean crazyArray[][][] = 
     	{
     			{	//A
@@ -309,9 +319,16 @@ public class NotSmartAlphabet
     			}	
     	};
     
+    public void printSpace(int num)
+    {
+    	for(int i=0; i<num; i++)
+    	{
+    		System.out.println();
+    	}
+    }
 
     
-    public void print(FontBitArray letter) 
+    public void printFontBitArray(FontBitArray letter, char positive, char negative) 
     {
     	for(boolean l[] : letter.getMap())
     	{
@@ -319,16 +336,35 @@ public class NotSmartAlphabet
     		{
     			if(c)
     			{
-    				System.out.print("X");
+    				System.out.print(positive);
     			}
     			else
     			{
-    				System.out.print(" ");
+    				System.out.print(negative);
     			}
     		}
     		System.out.println();
     	}
     }
+    
+    public void printFontBitArray(FontBitArray letter)
+    {
+    	this.printFontBitArray(letter, 'X', ' ');
+    }
+    
+    public void printChar(char c, char positive, char negative)
+    {
+    	int i = c - 65;
+    	this.printFontBitArray(this.letter[i], positive, negative);
+    	this.printSpace(2);
+    	
+    }
+    
+    public void printChar(char c)
+    {
+    	this.printChar(c, 'X', ' ');
+    }
+    
     
     public void setUp()
     {
@@ -339,14 +375,19 @@ public class NotSmartAlphabet
         }
     }
     
-    public void printAll()
+    public void printAll(char positive, char negative)
     {
     	for(int i=0; i<26; i++)
         {
-        	this.print(this.letter[i]);
+        	this.printFontBitArray(this.letter[i], positive, negative);
         	System.out.println();
         	System.out.println();
         }
+    }
+    
+    public void printAll()
+    {
+    	this.printAll('X', ' ');
     }
 //    letter[0].setMap(
 //    		{
