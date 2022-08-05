@@ -1,12 +1,8 @@
 package party_parrot_pete;
 import java.util.Scanner;
+import com.slack.api.bolt.App;
+import com.slack.api.bolt.jetty.SlackAppServer;
 
-class parrotPrinter
-{
-	int[] dimensions = {3,5};
-	
-	
-}
 
 public class MainClass 
 {
