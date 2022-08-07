@@ -5,23 +5,37 @@
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/7.5/samples
  */
 
+
 plugins {
   id 'java'
+  id 'eclipse'
+  id("application")
 }
 
-jar {
-  manifest {
-    attributes 'Main-Class': 'party_parrot_pete.MainClass'
-  }
-}
-
-
-dependencies {
-  implementation("com.slack.api:bolt:1.1.+")
-  implementation("com.slack.api:bolt-servlet:1.1.+")
-  implementation("com.slack.api:bolt-jetty:1.1.+")
-}
 
 repositories {
   mavenCentral()
 }
+
+
+dependencies {
+  implementation("com.slack.api:bolt:1.24.0")
+  implementation("com.slack.api:bolt-servlet:1.24.0")
+  implementation("com.slack.api:bolt-jetty:1.24.0")
+  implementation("org.slf4j:slf4j-simple:1.7.36")
+}
+
+application {
+  mainClassName = "MainClass"
+}
+
+
+run {
+  // gradle run -DslackLogLevel=debug
+  systemProperty "org.slf4j.simpleLogger.log.com.slack.api", System.getProperty("slackLogLevel")
+  environment 'SLACK_BOT_TOKEN', 'YOU NEED TO SET THESE DUMMY'
+  environment 'SLACK_SIGNING_SECRET', 'WHY HAVNT YOU SET THESE'
+}
+
+
+

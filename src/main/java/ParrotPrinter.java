@@ -1,4 +1,4 @@
-package party_parrot_pete;
+
 
 public class ParrotPrinter 
 {

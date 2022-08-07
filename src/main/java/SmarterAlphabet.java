@@ -1,60 +1,6 @@
 
-
-/*
- * Woe to you oh weary fool
- * who's been made to improve this tool
- * This is my first time making classes
- * The bar is low, so this crap passes
- * But if you think there's bugs to patch
- * Take my advice, just start from scratch
- */
-
-public class NotSmartAlphabet 
-{
-	FontBitArray letterA = new FontBitArray();
-	FontBitArray letterB = new FontBitArray();
-	FontBitArray letterC = new FontBitArray();
+public class SmarterAlphabet {
 	
-    private FontBitArray letter[] = new FontBitArray[26];
-	
-    boolean bMapA[][] = 
-    	{
-	        { false, false,  true,  true,  true, false, false},
-	        { false,  true,  true, false,  true,  true, false},
-	        {  true,  true, false, false, false,  true,  true},
-	        {  true,  true, false, false, false,  true,  true},
-	        {  true,  true,  true,  true,  true,  true,  true},
-	        {  true,  true, false, false, false,  true,  true},
-	        {  true,  true, false, false, false,  true,  true},
-	        {  true,  true, false, false, false,  true,  true}
-        };
-    
-    boolean bMapB[][] = 
-    	{
-    		{  true,  true,  true,  true,  true,  true, false},
-    		{  true,  true, false, false, false,  true,  true},
-    		{  true,  true, false, false, false,  true,  true},
-    		{  true,  true,  true,  true,  true,  true, false},
-    		{  true,  true, false, false, false,  true,  true},
-    		{  true,  true, false, false, false,  true,  true},
-    		{  true,  true, false, false, false,  true,  true},
-    		{  true,  true,  true,  true,  true,  true, false}
-    	};
-    
-    boolean bMapC[][] = 
-    	{
-    		{ false, false,  true,  true,  true,  true, false},
-    		{ false,  true,  true, false, false,  true,  true},
-    		{  true,  true, false, false, false, false, false},
-    		{  true,  true, false, false, false, false, false},
-    		{  true,  true, false, false, false, false, false},
-    		{  true,  true, false, false, false, false, false},
-    		{  true,  true, false, false, false, false, false},
-    		{ false,  true,  true, false, false,  true,  true},
-    		{ false, false,  true,  true,  true,  true, false}	
-    	};
-    
-    //did someone say THREE DIMENSONAL ARRAY!?  This array contains each letter as a two dimensional array
     boolean crazyArray[][][] = 
     	{
     			{	//A
@@ -316,121 +262,73 @@ public class NotSmartAlphabet
     				{  true,  true, false, false, false, false, false},
     				{  true,  true, false, false, false, false, false},
     				{  true,  true,  true,  true,  true,  true,  true}
-    			}	
+    			},
+    			{    //(space)
+    				{ false, false, false, false, false, false, false},
+    				{ false, false, false, false, false, false, false},
+    				{ false, false, false, false, false, false, false},
+    				{ false, false, false, false, false, false, false},
+    				{ false, false, false, false, false, false, false},
+    				{ false, false, false, false, false, false, false},
+    				{ false, false, false, false, false, false, false},
+    				{ false, false, false, false, false, false, false}
+    			}
     	};
-    
-    public void printSpace(int num)
-    {
-    	for(int i=0; i<num; i++)
-    	{
-    		System.out.println();
-    	}
-    }
+	
+	public String line(char c, int line, String positive, String negative)
+	{
+		StringBuilder sb = new StringBuilder();
+		int i = c - 65;
+		if(c==' ')
+		{
+			i = 26;
+		}
+		for(boolean b : crazyArray[i][line])
+		{
+			if(b)
+			{
+				sb.append(positive);
+			}
+			else
+			{
+				sb.append(negative);
+			}
+		}
+		return sb.toString();
+	}
+	
+	public String slackLetter(char c, String positive, String negative)
+	{
+		StringBuilder sb = new StringBuilder();
+		int letter = c - 65;
+		if(c==' ')
+		{
+			letter = 26;
+		}
+		for(int i=0; i<crazyArray[letter].length; i++)
+		{
+			sb.append(this.line(c, i, positive, negative) + "\n");
+		}
+		return sb.toString();
+	}
+	
+	public String slackString(String str, String positive, String negative, String spacer)
+	{
+		str = str.toUpperCase();
+		StringBuilder spaceBuilder = new StringBuilder();
+		for(int i=0; i<crazyArray[0][0].length; i++)
+		{
+			spaceBuilder.append(spacer);
+		}
+		String fullSpacer = spaceBuilder.toString();
+		
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<str.length(); i++)
+		{
+			sb.append(slackLetter(str.charAt(i), positive, negative) + fullSpacer + "\n");
+		}
+		return sb.toString();
+	}
+	
 
-    
-    public void printFontBitArray(FontBitArray letter, char positive, char negative) 
-    {
-    	for(boolean l[] : letter.getMap())
-    	{
-    		for(boolean c : l)
-    		{
-    			if(c)
-    			{
-    				System.out.print(positive);
-    			}
-    			else
-    			{
-    				System.out.print(negative);
-    			}
-    		}
-    		System.out.println();
-    	}
-    }
-    
-    
-    public void printFontBitArray(FontBitArray letter)
-    {
-    	this.printFontBitArray(letter, 'X', ' ');
-    }
-
-    //This method sucks
-//    public String[] convert(FontBitArray letter, String positive, String negative) 
-//    {
-//    	String returnString[] = new String[8];
-//    	
-//    	
-//    	int counter = 0;
-//    	for(boolean l[] : letter.getMap())
-//    	{
-//    		StringBuilder sb = new StringBuilder();
-//    		for(boolean c : l)
-//    		{
-//    			if(c)
-//    			{
-//    				sb.append(positive);
-//    			}
-//    			else
-//    			{
-//    				sb.append(negative);
-//    			}
-//    		}
-//    		returnString[counter] = sb.toString();
-//    		counter++;
-//    	}
-//    	return returnString[];
-//    }
-    
-    public void printChar(char c, char positive, char negative)
-    {
-    	int i = c - 65;
-    	this.printFontBitArray(this.letter[i], positive, negative);
-    	this.printSpace(2);
-    	
-    }
-    
-    public void printChar(char c)
-    {
-    	this.printChar(c, 'X', ' ');
-    }
-    
-    
-    public void setUp()
-    {
-        for(int i=0; i<26; i++)
-        {
-        	this.letter[i] = new FontBitArray();
-        	this.letter[i].setMap(crazyArray[i]);
-        }
-    }
-    
-    public void printAll(char positive, char negative)
-    {
-    	for(int i=0; i<26; i++)
-        {
-        	this.printFontBitArray(this.letter[i], positive, negative);
-        	System.out.println();
-        	System.out.println();
-        }
-    }
-    
-    public void printAll()
-    {
-    	this.printAll('X', ' ');
-    }
-//    letter[0].setMap(
-//    		{
-//    		        { false, false,  true,  true,  true, false, false},
-//    		        { false,  true,  true, false,  true,  true, false},
-//    		        {  true,  true, false, false, false,  true,  true},
-//    		        {  true,  true, false, false, false,  true,  true},
-//    		        {  true,  true,  true,  true,  true,  true,  true},
-//    		        {  true,  true, false, false, false,  true,  true},
-//    		        {  true,  true, false, false, false,  true,  true},
-//    		        {  true,  true, false, false, false,  true,  true}
-//            }
-//    		);
-
-
-    
-    
 }
