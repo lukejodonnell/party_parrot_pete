@@ -12,6 +12,20 @@ plugins {
   id("application")
 }
 
+tasks.register('Lukes'){
+  doLast {
+    println 'printing this line is the only thing Lukes secret task does'
+  }
+}
+
+tasks.register('loadfile') {
+  doLast {
+    def file = file('./code')
+    ant.loadfile(srcFile: file, property: file.name)
+    println " *** $file.name ***"
+    println "${ant.properties[file.name]}"
+  }
+}
 
 repositories {
   mavenCentral()
@@ -33,8 +47,21 @@ application {
 run {
   // gradle run -DslackLogLevel=debug
   systemProperty "org.slf4j.simpleLogger.log.com.slack.api", System.getProperty("slackLogLevel")
-  environment 'SLACK_BOT_TOKEN', 'YOU NEED TO SET THESE DUMMY'
-  environment 'SLACK_SIGNING_SECRET', 'WHY HAVNT YOU SET THESE'
+
+  def token = file('./SLACK_BOT_TOKEN')
+  def secret = file('./SLACK_SIGNING_SECRET')
+
+  ant.loadfile(srcFile: token, property: token.name)
+  ant.loadfile(srcFile: secret, property: secret.name)
+
+//  def tokenString = "${ant.properties[token.name]}".toString()
+//  def secretString = "${ant.properties[secret.name]}".toString()
+
+//  println(tokenString.endsWith('\n'))
+  
+  environment 'SLACK_BOT_TOKEN', "${ant.properties[token.name]}".minus('\n')
+  environment 'SLACK_SIGNING_SECRET', "${ant.properties[secret.name]}".minus('\n')
+
 }
 
 
